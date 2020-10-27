@@ -254,11 +254,11 @@ public class JMSWriter {
             Message m = builder.fromSinkRecord(jmsCtxt, r);
             inflight = true;
             JMSProducer jmsProducer = jmsProd.send(queue, m);
-            System.out.println("getJMSCorrelationID");
-            System.out.println(jmsProducer.getJMSCorrelationID());
+            System.out.println("messageID : "+m.getJMSMessageID()+" , co-relation ID : "+m.getJMSCorrelationID()+", message : "+m.toString());
         }
-        catch (JMSRuntimeException jmse) {
+        catch (JMSRuntimeException | JMSException jmse) {
             log.error("JMS exception {}", jmse);
+            System.out.println("exceptionFromJar : "+jmse.getMessage());
             throw handleException(jmse);
         }
 
